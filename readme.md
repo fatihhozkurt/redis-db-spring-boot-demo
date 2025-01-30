@@ -27,7 +27,7 @@ com.test.redisTest
     🔧 CustomerMapper            # DTO ↔ Entity Conversion with MapStruct
 
 🔘 repository
-    🔧 CustomerRepository        # Spring Data JPA Repository
+    🔧 CustomerRepository        # Repository layer
 
 🔘 service
     🔧 RedisTestApplication      # Application Entry Point
@@ -54,16 +54,17 @@ You can run Redis locally or using Docker:
 docker run --name redis-container -d -p 6379:6379 redis
 ```
 
-For local Redis:
+For local Redis (WSL):
 
 ```sh
-redis-server
+wsl
+redis-cli
 ```
 
 To test the connection:
 
 ```sh
-redis-cli ping
+ping
 # Output: PONG
 ```
 
@@ -71,15 +72,18 @@ redis-cli ping
 
 ```sh
 git clone https://github.com/username/redis-customer.git
-cd redis-customer
-mvn spring-boot:run
+cd redisTest
+mvn clean install
 ```
 
 ---
 
 ## 🔥 **Features**
 
-✅ **Customer Registration** 📝✅ **Redis Cache Usage** 🚀✅ **Spring Data JPA Integration** 🛤️✅ **DTO - Entity Mapping with MapStruct** 🔄✅ **Spring Boot REST API** 🛠️
+✅ **Customer Registration** 📝
+✅ **Redis Cache Usage** 🚀
+✅ **DTO - Entity Mapping with MapStruct** 🔄
+✅ **Spring Boot REST API** 🛠️
 
 ---
 
@@ -88,15 +92,15 @@ mvn spring-boot:run
 ### ➕ **Register a Customer**
 
 ```http
-POST /api/customers
+POST /customer/save
 ```
 
 👥 **Request Body**
 
 ```json
 {
-  "name": "John",
-  "email": "john@example.com"
+  "name": "Fatih",
+  "surname": "Özkurt"
 }
 ```
 
@@ -104,9 +108,9 @@ POST /api/customers
 
 ```json
 {
-  "id": "123e4567-e89b-12d3-a456-426614174000",
-  "name": "John",
-  "email": "john@example.com"
+  "id": "123e4567-e89b-12d3-a456-426614174000", (random ID)
+  "name": "Fatih",
+  "surname": "Özkurt"
 }
 ```
 
@@ -115,16 +119,16 @@ POST /api/customers
 ### 🔍 **Retrieve a Customer**
 
 ```http
-GET /api/customers/{id}
+GET /customer/id
 ```
 
 🔄 **Response**
 
 ```json
 {
-  "id": "123e4567-e89b-12d3-a456-426614174000",
-  "name": "John",
-  "email": "john@example.com"
+  "id": "123e4567-e89b-12d3-a456-426614174000", (random ID)
+  "name": "Fatih",
+  "surname": "Özkurt"
 }
 ```
 
@@ -135,14 +139,13 @@ GET /api/customers/{id}
 To see stored keys in Redis:
 
 ```sh
-redis-cli
-keys *
+SCAN 0 (it's better than scanning with "KEYS *" because SCAB 0 returns values as clusters with the help of a pointer and it does not block the other threads)
 ```
 
 To retrieve a specific customer record from Redis:
 
 ```sh
-GET customer:123e4567-e89b-12d3-a456-426614174000
+HGETALL customer:123e4567-e89b-12d3-a456-426614174000
 ```
 
 ---
@@ -157,5 +160,5 @@ If you want to contribute, feel free to **fork** and submit a PR! 🚀
 
 This project is licensed under the **MIT License**.
 
-📌 Developed by **Fatih**. 😊
+📌 Developed by **@fatihhozkurt**. 😊
 
