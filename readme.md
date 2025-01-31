@@ -139,7 +139,7 @@ GET /customer/id
 To see stored keys in Redis:
 
 ```sh
-SCAN 0 (it's better than scanning with "KEYS *" because SCAB 0 returns values as clusters with the help of a pointer and it does not block the other threads)
+SCAN 0 (it's better than scanning with "KEYS *" because SCAN 0 returns values as clusters with the help of a pointer and it does not block the other threads)
 ```
 
 To retrieve a specific customer record from Redis:
